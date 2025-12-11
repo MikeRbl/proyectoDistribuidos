@@ -1,0 +1,18 @@
+{
+    "name": "roble/events-service",
+    "autoload": {
+        "psr-4": {
+            "Roble\\EventsService\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "MikeRbl",
+            "email": "maicoalf77@gmail.com"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^6.11",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
