@@ -2,7 +2,9 @@
     "name": "roble/events-service",
     "autoload": {
         "psr-4": {
-            "Roble\\EventsService\\": "src/"
+            "App\\": "app/",
+            "Config\\": "config/",
+            "Router\\": "router/"
         }
     },
     "authors": [
@@ -12,7 +14,11 @@
         }
     ],
     "require": {
-        "firebase/php-jwt": "^6.11",
-        "vlucas/phpdotenv": "^5.6"
+        "firebase/php-jwt": "^6.10",
+        "vlucas/phpdotenv": "^5.6",
+        "ramsey/uuid": "^4.7"
+    },
+    "config": {
+        "optimize-autoloader": true
     }
 }

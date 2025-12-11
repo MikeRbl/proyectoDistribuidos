@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # ------------------------------
+  # Base de datos MySQL (Para Usuarios - Node.js)
+  # ------------------------------
+  mysql_db:
+    image: mysql:8.0
+    container_name: auth_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: sistemas_distribuidos
+      MYSQL_USER: user_node
+      MYSQL_PASSWORD: user123
+    ports:
+      - "3307:3306" # Accederás desde tu PC por el puerto 3307
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  # ------------------------------
+  # Base de datos Postgres (Para Eventos - PHP)
+  # ------------------------------
+  postgres_db:
+    image: postgres:15
+    container_name: events_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: eventos_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456789
+    ports:
+      - "5433:5432" # Accederás desde tu PC por el puerto 5433
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  # ------------------------------
+  # Herramientas de Administración Visual
+  # ------------------------------
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: admin_mysql
+    environment:
+      PMA_HOST: mysql_db
+      PMA_PORT: 3306
+    ports:
+      - "8081:80" # Entra a http://localhost:8081
+    depends_on:
+      - mysql_db
+    networks:
+      - app-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: admin_postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8082:80" # Entra a http://localhost:8082
+    depends_on:
+      - postgres_db
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
